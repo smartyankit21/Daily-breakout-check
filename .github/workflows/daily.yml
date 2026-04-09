@@ -1,0 +1,32 @@
+name: Daily Breakout Analysis
+
+on:
+  schedule:
+    - cron: '30 17 * * *'  # 11:00 PM IST (5:30 PM UTC) every day
+  workflow_dispatch:        # Also allows manual trigger from Actions tab
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirement.txt
+
+      - name: Run breakout analysis
+        run: python 5_6251517064754770080.py
+
+      - name: Upload CSV result as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: breakout-analysis-${{ github.run_id }}
+          path: BreakoutAnalysis60D_*.csv
+          retention-days: 30
