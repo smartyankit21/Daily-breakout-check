@@ -1,2 +1,4 @@
-google-genai
+pandas
+numpy
+jugaad-data
 requests
